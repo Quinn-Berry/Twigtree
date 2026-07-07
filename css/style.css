@@ -180,8 +180,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   line-height: 1;
   letter-spacing: 0.09em;
   color: var(--ink);
-  white-space: pre; /* typed spaces must keep their width */
 }
+
+/* pre lives on the word span only: a mid-type trailing space ("one ") must
+   keep its width, but the container must not render markup whitespace */
+.hero__word { white-space: pre; }
 
 .hero__cursor {
   display: inline-block;
