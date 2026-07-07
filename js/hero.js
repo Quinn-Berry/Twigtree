@@ -2,9 +2,9 @@
    Twig Tree — hero intro
    --------------------------------------------------------------------------
    Sequence:  logo flash (centered, oversized)
-            → settle into its big resting spot (CSS transition — the logo
-              fills most of the hero, sizes live in css/style.css --logo-*)
-            → a classic typewriter cycles WORDS beneath it, forever.
+            → settle into its resting spot on the left (CSS transition —
+              sizes live in css/style.css --logo-*)
+            → a classic typewriter cycles WORDS beside it, forever.
    ========================================================================== */
 
 (function () {
@@ -24,10 +24,10 @@
 
   /* Typewriter pacing (ms) */
   const TYPE = {
-    typeMs: 95,      // per character typed
-    deleteMs: 48,    // per character deleted
-    holdMs: 1000,    // full word on screen
-    gapMs: 450,      // empty pause between words
+    typeMs: 48,      // per character typed
+    deleteMs: 26,    // per character deleted
+    holdMs: 550,     // full word on screen
+    gapMs: 220,      // empty pause between words
   };
 
   /* Intro pacing (ms) — flash length must match the CSS keyframes */

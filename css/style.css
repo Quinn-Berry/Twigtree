@@ -38,19 +38,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ==========================================================================
    HERO — animated intro (logic in js/hero.js)
    Warm paper, ink mark. The logo flashes centered and oversized, settles
-   into its big resting spot, then a typewriter cycles words beneath it.
+   into its resting spot on the left, then a typewriter cycles words
+   beside it.
    ========================================================================== */
 
 .hero {
   /* Layout knobs: */
-  --logo-top: 92px;                  /* resting position below the nav */
-  --logo-h: min(56vh, 600px);        /* resting logo height — most of the hero */
-  --logo-h-intro: min(66vh, 700px);  /* oversized intro logo height */
-  --type-gap: 42px;                  /* air between logo base and the typed word */
+  --logo-left: 56px;                 /* resting position, in from the left edge */
+  --logo-h: min(26vh, 200px);        /* resting logo height — hero is short now */
+  --logo-h-intro: min(50vh, 420px);  /* oversized intro logo height */
+  --logo-ratio: 0.514;               /* logo asset's width:height, for positioning the type */
+  --type-gap: 36px;                  /* air between the logo and the typed word */
 
   position: relative;
-  height: 100vh;
-  height: 100svh;
+  height: min(46vh, 380px);
+  height: min(46svh, 380px);
+  min-height: 300px;
   color: var(--ink);
   overflow: hidden;
 }
@@ -133,20 +136,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero__logo {
   position: absolute;
   z-index: 1;
-  left: 50%;
   /* default = settled, so the layout is sane even without JS */
-  top: var(--logo-top);
+  top: 50%;
+  left: var(--logo-left);
   height: var(--logo-h);
   width: auto;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
   transition:
     top    0.9s var(--ease),
+    left   0.9s var(--ease),
     height 0.9s var(--ease),
     transform 0.9s var(--ease);
 }
 
 .hero__logo.is-intro {
-  top: 46%;
+  top: 50%;
+  left: 50%;
   height: var(--logo-h-intro);
   transform: translate(-50%, -50%);
   opacity: 0; /* until the flash plays */
@@ -170,12 +175,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero__type {
   position: absolute;
   z-index: 1;
-  left: 0;
-  right: 0;
-  top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap));
-  text-align: center;
+  top: 50%;
+  left: calc(var(--logo-left) + (var(--logo-h) * var(--logo-ratio)) + var(--type-gap));
+  right: 24px;
+  transform: translateY(-50%);
+  text-align: left;
   font-family: var(--serif);
-  font-size: clamp(34px, 6vw, 58px);
+  font-size: clamp(28px, 5vw, 52px);
   line-height: 1;
   letter-spacing: 0.09em;
   color: var(--ink);
@@ -634,12 +640,35 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .hero__nav { padding: 18px 18px; }
   .shop { padding-top: 40px; }
 
-  /* slightly smaller logo so the word stays comfortably on screen */
+  /* Not enough width for the side-by-side layout — stack the logo above
+     the typewriter instead, both centered. */
   .hero {
-    --logo-top: 80px;
-    --logo-h: min(50vh, 440px);
-    --logo-h-intro: min(58vh, 500px);
-    --type-gap: 32px;
+    height: min(52vh, 420px);
+    --logo-top: 44px;
+    --logo-h: min(20vh, 160px);
+    --logo-h-intro: min(46vh, 380px);
+    --type-gap: 20px;
+  }
+
+  .hero__logo {
+    top: var(--logo-top);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero__logo.is-intro {
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero__type {
+    top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap));
+    left: 0;
+    right: 0;
+    transform: none;
+    text-align: center;
+    font-size: clamp(24px, 7vw, 40px);
   }
 }
 
