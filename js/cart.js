@@ -157,7 +157,7 @@
       `%0D%0A%0D%0ATotal: ${encodeURIComponent(money(total))}%0D%0A%0D%0AThanks!`;
     window.location.href =
       'mailto:eli@twigtree.shop?subject=' +
-      encodeURIComponent('Twig Tree reservation') +
+      encodeURIComponent('twigtree reservation') +
       '&body=' + body;
   });
 

@@ -6,6 +6,7 @@
 :root {
   --paper: #f4f1ea;        /* page background */
   --paper-raised: #fbf9f4; /* cards / panels */
+  --paper-deep: #ebe6d9;   /* the sourcing band — a shade warmer than the page */
   --ink: #1c1a17;          /* primary text */
   --ink-soft: #5d574d;     /* secondary text */
   --line: #d9d3c6;         /* hairlines */
@@ -596,6 +597,134 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cart-fab .cart-toggle__count { background: var(--paper); color: var(--ink); }
 
 /* ==========================================================================
+   SOURCING — "hire me to find it" band (form logic in js/sourcing.js)
+   Sits after the grid on a deeper paper shade so it reads as its own band.
+   ========================================================================== */
+
+.sourcing {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--line);
+}
+
+.sourcing__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 72px 24px 84px;
+  display: grid;
+  grid-template-columns: 5fr 6fr;   /* editorial copy left, form right */
+  gap: 48px clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+.sourcing__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin: 0 0 14px;
+}
+
+.sourcing__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.12;
+  margin: 0 0 18px;
+}
+
+.sourcing__pitch {
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 0 28px;
+}
+
+/* the 3-step: quiet list, serif numerals in olive */
+.sourcing__steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.sourcing__steps li {
+  counter-increment: step;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 2px;
+  border-bottom: 1px solid var(--line);
+}
+.sourcing__steps li::before {
+  content: counter(step) ".";
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--olive);
+}
+
+/* ---- The request form ---- */
+
+.sourcing__form { display: flex; flex-direction: column; gap: 18px; }
+/* display:flex would beat the [hidden] attribute after submit — force it */
+.sourcing__form[hidden] { display: none; }
+
+.sourcing__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.sourcing__field { display: flex; flex-direction: column; gap: 6px; }
+
+.sourcing__field label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.sourcing__field label span { text-transform: none; letter-spacing: 0.02em; }
+
+.sourcing__field input,
+.sourcing__field textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 11px 13px;
+}
+.sourcing__field textarea { resize: vertical; min-height: 110px; }
+
+.sourcing__field input:focus,
+.sourcing__field textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.sourcing__field ::placeholder { color: var(--ink-soft); opacity: 0.6; }
+
+.sourcing__submit { align-self: flex-start; margin-top: 4px; }
+
+.sourcing__error { color: #8a3b2e; font-size: 14px; margin: 0; }
+
+/* honeypot — visually gone, still in the DOM for bots to trip on */
+.sourcing__trap {
+  position: absolute;
+  left: -9999px;
+  margin: 0;
+}
+
+/* ---- Thank-you state (js/sourcing.js swaps it in for the form) ---- */
+
+.sourcing__thanks { padding: 24px 0; outline: none; }
+.sourcing__thanks-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+.sourcing__thanks-sub { color: var(--ink-soft); margin: 0; }
+
+/* ==========================================================================
    FOOTER
    ========================================================================== */
 
@@ -615,6 +744,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* sourcing: copy stacks above the form */
+  .sourcing__inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 24px 64px; }
 }
 
 @media (max-width: 600px) {
@@ -631,8 +763,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
   /* keep the close button clear of the name on small screens */
   .detail__name { padding-right: 40px; }
 
-  .hero__nav { padding: 18px 18px; }
+  /* three nav links + cart have to share a phone width */
+  .hero__nav { padding: 18px 16px; gap: 10px; }
+  .hero__nav-brand { font-size: 18px; }
+  .hero__nav-links { gap: 12px; }
+  .hero__nav-links a {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .cart-toggle { padding: 5px 11px; font-size: 10.5px; letter-spacing: 0.06em; }
+
   .shop { padding-top: 40px; }
+
+  /* sourcing form fields stack in one column */
+  .sourcing__row { grid-template-columns: 1fr; }
+  .sourcing__submit { align-self: stretch; }
 
   /* slightly smaller logo so the word stays comfortably on screen */
   .hero {

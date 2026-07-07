@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Twig Tree — Vintage Streetwear</title>
-  <meta name="description" content="Twig Tree. A small, curated shop for vintage streetwear and band tees. Few pieces, all real.">
+  <title>twigtree — Vintage Streetwear</title>
+  <meta name="description" content="twigtree. A small, curated shop for vintage streetwear and band tees. Few pieces, all real.">
   <link rel="icon" href="assets/logo.png">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Netlify Identity: detects invite/recovery links in the URL and opens
+       the signup/login modal, so CMS invites work from the homepage -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body data-page="shop">
 
@@ -17,8 +20,9 @@
        ============================================================ -->
   <header class="hero" id="hero">
     <nav class="hero__nav">
-      <span class="hero__nav-brand">Twig&nbsp;Tree</span>
+      <span class="hero__nav-brand">twigtree</span>
       <div class="hero__nav-links">
+        <a href="#sourcing">Sourcing</a>
         <a href="sold.html">Sold archive</a>
         <button class="cart-toggle" id="cart-toggle" aria-label="Open cart">
           Cart <span class="cart-toggle__count" id="cart-count" hidden>0</span>
@@ -26,9 +30,9 @@
       </div>
     </nav>
 
-    <img class="hero__logo" id="hero-logo" src="assets/logo.png" alt="Twig Tree">
+    <img class="hero__logo" id="hero-logo" src="assets/logo.png" alt="twigtree">
 
-    <h1 class="sr-only">Twig Tree — vintage streetwear, one piece at a time</h1>
+    <h1 class="sr-only">twigtree — vintage streetwear, one piece at a time</h1>
 
     <!-- Typewriter masthead (decorative — the h1 above carries the meaning) -->
     <div class="hero__type" aria-hidden="true">
@@ -56,8 +60,83 @@
     </section>
   </main>
 
+  <!-- ============================================================
+       SOURCING — "hire me to find it" lead capture.
+       The form is static HTML with data-netlify="true" so Netlify
+       auto-detects it at deploy time; js/sourcing.js submits it via
+       fetch and swaps in the thank-you note in place.
+       ============================================================ -->
+  <section class="sourcing" id="sourcing">
+    <div class="sourcing__inner">
+      <div class="sourcing__copy">
+        <p class="sourcing__eyebrow">Sourcing</p>
+        <h2 class="sourcing__title">Can’t find it here? Let me hunt it down.</h2>
+        <p class="sourcing__pitch">twigtree isn’t just a rack — it’s an eye. Tell me the piece you’ve been chasing: the band, the tour, the year, the size. I know the landscape, the sellers, and where the good stuff hides — and I’ll track it down for you.</p>
+        <ol class="sourcing__steps">
+          <li>Tell me what you’re after.</li>
+          <li>I go find it.</li>
+          <li>You approve before anything’s final.</li>
+        </ol>
+      </div>
+
+      <form class="sourcing__form" id="sourcing-form" name="sourcing-request"
+            method="POST" action="#sourcing" data-netlify="true" netlify-honeypot="bot-field">
+        <!-- Netlify needs the form name in the payload too -->
+        <input type="hidden" name="form-name" value="sourcing-request">
+        <!-- honeypot: hidden from humans, tempting to bots -->
+        <p class="sourcing__trap" aria-hidden="true">
+          <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="sourcing__row">
+          <div class="sourcing__field">
+            <label for="src-name">Name</label>
+            <input id="src-name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="sourcing__field">
+            <label for="src-email">Email</label>
+            <input id="src-email" name="email" type="email" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="sourcing__field">
+          <label for="src-instagram">Instagram handle <span>(optional)</span></label>
+          <input id="src-instagram" name="instagram" type="text" placeholder="@">
+        </div>
+
+        <div class="sourcing__field">
+          <label for="src-want">What are you looking for?</label>
+          <textarea id="src-want" name="looking-for" rows="5" required
+                    placeholder="Band, tour, year, colorway — whatever you know."></textarea>
+        </div>
+
+        <div class="sourcing__row">
+          <div class="sourcing__field">
+            <label for="src-size">Size <span>(optional)</span></label>
+            <input id="src-size" name="size" type="text">
+          </div>
+          <div class="sourcing__field">
+            <label for="src-budget">Budget range <span>(optional)</span></label>
+            <input id="src-budget" name="budget" type="text" placeholder="$100–200">
+          </div>
+        </div>
+
+        <button class="btn btn--primary sourcing__submit" type="submit">Start the search</button>
+        <p class="sourcing__error" id="sourcing-error" hidden>
+          Something went wrong — email <a href="mailto:eli@twigtree.shop">eli@twigtree.shop</a> instead.
+        </p>
+      </form>
+
+      <!-- Shown in place of the form after a successful submit -->
+      <div class="sourcing__thanks" id="sourcing-thanks" hidden tabindex="-1">
+        <p class="sourcing__thanks-title">Got it — I’ll be in touch soon.</p>
+        <p class="sourcing__thanks-sub">The hunt starts now. Keep an eye on your inbox.</p>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
-    <p>Twig Tree · curated vintage · <a href="mailto:eli@twigtree.shop">eli@twigtree.shop</a></p>
+    <p>twigtree · curated vintage · <a href="mailto:eli@twigtree.shop">eli@twigtree.shop</a></p>
   </footer>
 
   <!-- ============================================================
@@ -85,5 +164,19 @@
   <script src="js/hero.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/sourcing.js"></script>
+  <!-- After completing a Netlify Identity invite/login here, send the new
+       user into the CMS (standard Decap + Identity setup step) -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', (user) => {
+        if (!user) {
+          window.netlifyIdentity.on('login', () => {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
