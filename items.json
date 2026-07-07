@@ -1,0 +1,169 @@
+{
+  "items": [
+    {
+      "id": "nirvana-in-utero-94",
+      "name": "Nirvana “In Utero” Tee, 1994",
+      "price": 240,
+      "size": "L (fits M)",
+      "condition": "Very good — soft fade, no cracking",
+      "story": "Original 1994 In Utero press tee on a single-stitch Wild Oats blank. The Kurt-drawn winged anatomy figure on the front is still sharp, with the classic collage back print. In Utero was the band's last studio record, cut with Steve Albini in two weeks in Minnesota — this shirt sold on the '93–'94 tour legs that ended in Munich. Honest wear, beautiful hand, the kind of fade you can't fake.",
+      "images": [
+        "/assets/uploads/nirvana-in-utero-front.svg",
+        "/assets/uploads/nirvana-in-utero-back.svg",
+        "/assets/uploads/nirvana-in-utero-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-28"
+    },
+    {
+      "id": "wu-tang-forever-97",
+      "name": "Wu-Tang “Forever” Promo Tee, 1997",
+      "price": 185,
+      "size": "XL",
+      "condition": "Excellent — barely worn",
+      "story": "Loud Records promo tee for Wu-Tang Forever, the double album that debuted at #1 in June '97. Giant W logo front and center, tracklist on the back. These were pressed for record stores and street teams ahead of the release — most got worn to death, this one somehow didn't. Boxy '90s XL cut.",
+      "images": [
+        "/assets/uploads/wu-tang-forever-front.svg",
+        "/assets/uploads/wu-tang-forever-back.svg",
+        "/assets/uploads/wu-tang-forever-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-25"
+    },
+    {
+      "id": "stussy-8ball-hoodie",
+      "name": "Stüssy 8-Ball Hoodie, early ’90s",
+      "price": 150,
+      "size": "L",
+      "condition": "Good — light pilling, strings intact",
+      "story": "Early-'90s Stüssy USA-made hoodie with the 8-ball graphic — one of Shawn Stussy's defining marks from the era when the brand went from Laguna Beach surfboards to the uniform of the International Stüssy Tribe. Heavyweight fleece, dyed a perfect faded black that reads charcoal in daylight.",
+      "images": [
+        "/assets/uploads/stussy-8ball-front.svg",
+        "/assets/uploads/stussy-8ball-back.svg",
+        "/assets/uploads/stussy-8ball-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-22"
+    },
+    {
+      "id": "carhartt-detroit-89",
+      "name": "Carhartt Detroit Jacket, 1989",
+      "price": 210,
+      "size": "44 (L/XL)",
+      "condition": "Broken in — perfect duck canvas fade",
+      "story": "Blanket-lined Detroit jacket in duck brown, made in the USA around '89 judging by the tag. Thirty-five years of work softened the canvas into something you can't buy new. Corduroy collar is clean, zipper runs true, both flap pockets solid. This is the jacket every workwear reissue is trying to copy.",
+      "images": [
+        "/assets/uploads/carhartt-detroit-front.svg",
+        "/assets/uploads/carhartt-detroit-back.svg",
+        "/assets/uploads/carhartt-detroit-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-20"
+    },
+    {
+      "id": "pumpkins-mellon-96",
+      "name": "Smashing Pumpkins “Infinite Sadness” Tee, 1996",
+      "price": 260,
+      "size": "XL",
+      "condition": "Very good — minor collar wear",
+      "story": "From the Mellon Collie and the Infinite Sadness world tour, 1996. Front hits with the celestial heart graphic, back lists the tour dates. Mellon Collie was the band's sprawling 28-track double album — Billy Corgan called it 'The Wall for Gen X.' Tour merch from this run has become some of the most sought-after '90s alt-rock cotton there is.",
+      "images": [
+        "/assets/uploads/pumpkins-mellon-front.svg",
+        "/assets/uploads/pumpkins-mellon-back.svg",
+        "/assets/uploads/pumpkins-mellon-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-18"
+    },
+    {
+      "id": "levis-501-92",
+      "name": "Levi’s 501, made in USA, ~1992",
+      "price": 120,
+      "size": "33 × 32",
+      "condition": "Good — even honeycomb fade, no repairs",
+      "story": "USA-made 501s from the early '90s — care tag and button stamp date them around '92. Mid-wash indigo with natural whiskering and honeycombs earned the slow way. The last great era of mass-produced 501s before production moved offshore in 2003. Straight fit, sits at the waist, cuffs clean.",
+      "images": [
+        "/assets/uploads/levis-501-front.svg",
+        "/assets/uploads/levis-501-back.svg",
+        "/assets/uploads/levis-501-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-15"
+    },
+    {
+      "id": "tommy-sailing-93",
+      "name": "Tommy Hilfiger Sailing Tee, 1993",
+      "price": 95,
+      "size": "L",
+      "condition": "Excellent — colors still loud",
+      "story": "Big-flag sailing graphic tee from the era when Tommy went from prep staple to hip-hop uniform — Grand Puba and Brand Nubian put the flag on wax in '92 and the streets did the rest. Primary-color block print, made in USA, still bright after three decades.",
+      "images": [
+        "/assets/uploads/tommy-sailing-front.svg",
+        "/assets/uploads/tommy-sailing-back.svg",
+        "/assets/uploads/tommy-sailing-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-12"
+    },
+    {
+      "id": "outkast-stankonia-01",
+      "name": "OutKast “Stankonia” Tour Tee, 2001",
+      "price": 175,
+      "size": "L",
+      "condition": "Very good — light overall fade",
+      "story": "From the Stankonia tour, 2001 — André 3000 and Big Boi in front of the black-and-white flag from the album cover. Stankonia won the Grammy for Best Rap Album and 'Ms. Jackson' went #1 while these were selling at venues. Y2K rap tees are the new '90s rock tees; this one's from the run that earned it.",
+      "images": [
+        "/assets/uploads/outkast-stankonia-front.svg",
+        "/assets/uploads/outkast-stankonia-back.svg",
+        "/assets/uploads/outkast-stankonia-detail.svg"
+      ],
+      "sold": false,
+      "dateAdded": "2026-06-10"
+    },
+    {
+      "id": "metallica-justice-88",
+      "name": "Metallica “…And Justice for All” Tee, 1988",
+      "price": 320,
+      "size": "L (fits M/L)",
+      "condition": "Good — thin and soft, small pinhole",
+      "story": "Original '88 Justice tee with the toppling Lady Justice front print and Damaged Justice tour dates on the back. First record after Cliff Burton's death, first with Jason Newsted — and the album where the bass famously vanished from the mix. Paper-thin 50/50 blend that drapes like silk.",
+      "images": [
+        "/assets/uploads/metallica-justice-front.svg",
+        "/assets/uploads/metallica-justice-back.svg",
+        "/assets/uploads/metallica-justice-detail.svg"
+      ],
+      "sold": true,
+      "dateAdded": "2026-05-30"
+    },
+    {
+      "id": "nike-grey-tag-91",
+      "name": "Nike Grey Tag Sweatshirt, 1991",
+      "price": 130,
+      "size": "XL (boxy)",
+      "condition": "Very good — dense fleece, cuffs tight",
+      "story": "Grey-tag era Nike crewneck, made in USA, with the embroidered swoosh and block spellout. The grey tag ran roughly '88–'94 — the sweet spot for Nike blanks, when the fleece was heavy and the cuts were square. This one lived a gentle life.",
+      "images": [
+        "/assets/uploads/nike-grey-tag-front.svg",
+        "/assets/uploads/nike-grey-tag-back.svg",
+        "/assets/uploads/nike-grey-tag-detail.svg"
+      ],
+      "sold": true,
+      "dateAdded": "2026-05-24"
+    },
+    {
+      "id": "bape-camo-05",
+      "name": "Bape 1st Camo Tee, ~2005",
+      "price": 220,
+      "size": "M (Japanese L)",
+      "condition": "Excellent",
+      "story": "Green 1st camo ape-head tee from Nigo's imperial phase — around the time Pharrell and Bape rewired what streetwear meant, and lining up on Ura-Harajuku backstreets was half the point. Licensed-era Japanese production, tagged L, fits a true M.",
+      "images": [
+        "/assets/uploads/bape-camo-front.svg",
+        "/assets/uploads/bape-camo-back.svg",
+        "/assets/uploads/bape-camo-detail.svg"
+      ],
+      "sold": true,
+      "dateAdded": "2026-05-18"
+    }
+  ]
+}

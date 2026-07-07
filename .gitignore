@@ -1,0 +1,4 @@
+# local session/tooling state — not part of the site
+.remember/
+.claude/settings.local.json
+.DS_Store

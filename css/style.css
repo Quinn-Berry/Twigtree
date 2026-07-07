@@ -1,0 +1,598 @@
+/* ==========================================================================
+   Twig Tree — vintage streetwear resale
+   Palette: warm paper, ink, olive accents. Serif display, quiet sans body.
+   ========================================================================== */
+
+:root {
+  --paper: #f4f1ea;        /* page background */
+  --paper-raised: #fbf9f4; /* cards / panels */
+  --ink: #1c1a17;          /* primary text */
+  --ink-soft: #5d574d;     /* secondary text */
+  --line: #d9d3c6;         /* hairlines */
+  --olive: #4a5138;        /* accent */
+  --olive-dark: #363c28;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gap: 18px;             /* grid gutter — JS reads column count from the grid */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* soft decel for expand/collapse */
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  color: #f4f1ea;
+  overflow: hidden;
+}
+
+.hero__bg {
+  /* PLACEHOLDER — swap /assets/hero.jpg for the real header image */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero__nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+}
+
+.hero__nav-brand {
+  font-family: var(--serif);
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.hero__nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.hero__nav-links a {
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+.hero__nav-links a:hover { opacity: 1; text-decoration: underline; }
+
+.cart-toggle {
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cart-toggle:hover { background: rgba(255, 255, 255, 0.12); }
+
+.cart-toggle__count {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  min-width: 19px;
+  height: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  padding: 0 5px;
+}
+.cart-toggle__count[hidden] { display: none; }
+
+.hero__center {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.hero__logo {
+  /* PLACEHOLDER — swap /assets/logo.png for the real logo */
+  width: 110px;
+  height: 110px;
+  margin-bottom: 10px;
+  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.hero__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(52px, 9vw, 108px);
+  letter-spacing: 0.02em;
+  margin: 0;
+  line-height: 1;
+}
+
+.hero__tagline {
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-top: 18px;
+}
+
+.hero__scroll-cue {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  margin-bottom: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.7;
+}
+.hero__scroll-cue:hover { opacity: 1; }
+.hero__scroll-cue svg { animation: cue-bob 2.2s var(--ease) infinite; }
+
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* ==========================================================================
+   SUBHEAD (Sold page header)
+   ========================================================================== */
+
+.subhead { border-bottom: 1px solid var(--line); }
+.subhead__nav { color: var(--ink); }
+.subhead__body { text-align: center; padding: 48px 24px 56px; }
+.subhead__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 0;
+}
+.subhead__sub { color: var(--ink-soft); margin-top: 10px; }
+
+/* ==========================================================================
+   SHOP GRID
+   3 columns desktop → 1 column phones. The detail row spans all columns.
+   ========================================================================== */
+
+.shop {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 56px 24px 90px;
+}
+
+.shop__intro {
+  color: var(--ink-soft);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  margin: 0 0 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* JS reads this to find each tile's row */
+  gap: 28px var(--gap);
+  align-items: start;
+}
+
+/* ---- Tile ---- */
+
+.tile {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+
+.tile__img-wrap {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.tile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.tile:hover .tile__img { transform: scale(1.03); }
+
+.tile__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.tile__name {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.tile__price {
+  font-size: 14px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* The tile currently expanded lives on inside the detail row; its grid slot
+   is removed so former row-mates flow down into the next row. */
+.tile--expanded { display: none; }
+
+/* Sold page variant */
+.grid--sold .tile { cursor: default; }
+.tile__sold-flag {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 3px 9px;
+}
+.grid--sold .tile__img { filter: saturate(0.6); opacity: 0.85; }
+
+/* ==========================================================================
+   DETAIL ROW — the in-place expansion (see js/main.js)
+
+   Spans all 3 grid columns. Internally: the featured image column is 1.5×
+   a normal tile width (the "~150% scale"), and the info panel takes the
+   rest — visually the space where columns 2–3 sit.
+   ========================================================================== */
+
+.detail {
+  grid-column: 1 / -1;           /* full-width row inside the main grid */
+  overflow: hidden;              /* lets us animate height on expand/collapse */
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+}
+
+.detail__inner {
+  position: relative;
+  display: grid;
+  /* 1.5 tile-widths for the image, remaining ~1.5 for the panel.
+     Total grid width = 3 tiles + 2 gaps, so:  */
+  grid-template-columns: calc(50% - var(--gap) / 2) 1fr;
+  gap: 0 calc(var(--gap) * 1.5);
+  padding: 26px;
+}
+
+/* ---- Featured image + gallery ---- */
+
+.detail__media { min-width: 0; }
+
+.detail__cover-wrap {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;           /* same ratio as tiles, 1.5× the width */
+  overflow: hidden;
+}
+
+.detail__cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Quick crossfade when a thumbnail swaps into the cover slot */
+.detail__cover.is-swapping { animation: cover-fade 0.35s var(--ease); }
+@keyframes cover-fade { from { opacity: 0.25; } to { opacity: 1; } }
+
+.detail__thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.detail__thumb {
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  width: 64px;
+  height: 80px;
+  overflow: hidden;
+  opacity: 0.75;
+}
+.detail__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.detail__thumb:hover { opacity: 1; }
+.detail__thumb.is-active {
+  opacity: 1;
+  border-color: var(--ink);
+}
+
+/* ---- Info panel ---- */
+
+.detail__info {
+  min-width: 0;
+  padding: 6px 44px 0 0;         /* right padding keeps text clear of the close button */
+  display: flex;
+  flex-direction: column;
+}
+
+.detail__name {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+.detail__price {
+  font-size: 18px;
+  color: var(--olive);
+  margin: 0 0 18px;
+}
+
+.detail__specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px;
+  margin: 0 0 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.detail__specs dt {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  align-self: baseline;
+}
+.detail__specs dd { margin: 0; align-self: baseline; }
+
+.detail__story {
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+  max-width: 56ch;
+}
+
+.detail__actions { margin-top: auto; padding-bottom: 4px; }
+
+/* ---- Buttons ---- */
+
+.btn {
+  border: 1px solid var(--ink);
+  background: none;
+  padding: 12px 28px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn--primary {
+  background: var(--olive);
+  border-color: var(--olive);
+  color: var(--paper);
+}
+.btn--primary:hover { background: var(--olive-dark); border-color: var(--olive-dark); }
+
+.btn[disabled] { opacity: 0.55; cursor: default; }
+
+/* ---- Circular close button, top-right of the detail row ---- */
+
+.icon-btn {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.icon-btn:hover { background: var(--ink); color: var(--paper); transform: rotate(90deg); }
+
+.detail__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   CART — slide-out panel, bottom-right
+   ========================================================================== */
+
+.cart {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 92vw);
+  background: var(--paper-raised);
+  border-left: 1px solid var(--line);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s var(--ease);
+}
+.cart.is-open { transform: translateX(0); }
+
+.cart-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 26, 23, 0.35);
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.cart-scrim.is-open { opacity: 1; }
+
+.cart__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+}
+.cart__head h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 0; }
+
+.cart__list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.cart__item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cart__item img { width: 52px; height: 65px; object-fit: cover; border: 1px solid var(--line); }
+.cart__item-name { font-family: var(--serif); font-size: 15px; }
+.cart__item-price { color: var(--ink-soft); font-size: 13px; }
+.cart__item-body { flex: 1; min-width: 0; }
+
+.cart__remove {
+  background: none;
+  border: 0;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  padding: 4px;
+}
+.cart__remove:hover { color: var(--ink); }
+
+.cart__empty { padding: 26px 22px; color: var(--ink-soft); }
+
+.cart__foot { padding: 18px 22px 24px; border-top: 1px solid var(--line); }
+.cart__total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+.cart__foot .btn { width: 100%; }
+.cart__note { font-size: 12px; color: var(--ink-soft); margin: 10px 0 0; }
+
+/* Floating cart button once you've scrolled past the hero nav */
+.cart-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 40;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(28, 26, 23, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.cart-fab.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.cart-fab .cart-toggle__count { background: var(--paper); color: var(--ink); }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 30px 24px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   3 cols → 2 cols (tablet) → 1 col (phone). On phones the detail panel
+   stacks BELOW the featured image.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+
+  .detail__inner {
+    grid-template-columns: 1fr;   /* image on top, info below */
+    gap: 22px;
+    padding: 18px;
+  }
+
+  .detail__info { padding-right: 0; }
+  .detail__close { top: 12px; right: 12px; }
+  /* keep the close button clear of the name on small screens */
+  .detail__name { padding-right: 40px; }
+
+  .hero__nav { padding: 18px 18px; }
+  .shop { padding-top: 40px; }
+}
+
+/* Respect reduced-motion users: skip the expand/collapse animation */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .detail, .tile__img, .cart, .cart-scrim { transition: none !important; animation: none !important; }
+  .hero__scroll-cue svg { animation: none; }
+}

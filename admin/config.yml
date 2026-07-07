@@ -1,0 +1,71 @@
+# =============================================================================
+# Twig Tree — Decap CMS configuration
+#
+# The whole inventory is one collection ("Items") backed by items.json.
+# Workflow for a non-technical user:
+#   1. go to  <your-site>/admin/  and log in
+#   2. open Inventory → Items, click "Add items +"
+#   3. fill the form, drag photos into the Photos field, hit Publish
+# Decap commits the change to the repo; Netlify redeploys automatically.
+# Flipping "Sold" moves a piece from the main grid to the Sold archive.
+# =============================================================================
+
+# --- BACKEND -----------------------------------------------------------------
+# git-gateway is for NETLIFY hosting: enable Identity + Git Gateway in the
+# Netlify dashboard (Site settings → Identity), invite yourself as a user.
+#
+# >>> HOSTING ON GITHUB PAGES INSTEAD? <<<
+# Swap the backend for GitHub + an OAuth app, e.g.:
+#     backend:
+#       name: github
+#       repo: your-username/twigtree     # owner/repo
+#       branch: main
+#       base_url: https://your-oauth-provider.example.com  # OAuth proxy you host
+# GitHub Pages has no built-in auth server, so you must host a small OAuth
+# proxy (or use an external OAuth provider service) and register a GitHub
+# OAuth App pointing at it. See: https://decapcms.org/docs/github-backend/
+backend:
+  name: git-gateway
+  branch: main
+
+# Uploaded photos land in the repo here...
+media_folder: "assets/uploads"
+# ...and are referenced from the site with this public path (items.json paths)
+public_folder: "/assets/uploads"
+
+site_url: "/"
+logo_url: "/assets/logo.png"
+
+collections:
+  - name: "inventory"
+    label: "Inventory"
+    files:
+      - name: "items"
+        label: "Items"
+        file: "items.json"           # the single source of truth for the site
+        description: "Every piece in the shop. First photo is the cover image. Toggle Sold to move a piece to the archive."
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            label_singular: "Item"
+            summary: "{{fields.name}} — ${{fields.price}}{{fields.sold | ternary(' (SOLD)','')}}"
+            fields:
+              - { label: "ID",         name: "id",        widget: "string",
+                  hint: "Short unique slug, e.g. nirvana-in-utero-94. Set once, then leave alone." }
+              - { label: "Name",       name: "name",      widget: "string" }
+              - { label: "Price ($)",  name: "price",     widget: "number", value_type: "float", min: 0 }
+              - { label: "Size",       name: "size",      widget: "string",
+                  hint: "e.g. L (fits M), 33 × 32" }
+              - { label: "Condition",  name: "condition", widget: "string" }
+              - { label: "Story",      name: "story",     widget: "text",
+                  hint: "The good stuff — band, album, tour, era, provenance." }
+              - label: "Photos"
+                name: "images"
+                widget: "list"
+                field: { label: "Photo", name: "image", widget: "image" }
+                hint: "Drag to reorder — the FIRST photo is the cover shown in the grid."
+              - { label: "Sold",       name: "sold",      widget: "boolean", default: false,
+                  hint: "Flip on when it sells — the piece moves to the Sold archive automatically." }
+              - { label: "Date added", name: "dateAdded", widget: "datetime",
+                  format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }

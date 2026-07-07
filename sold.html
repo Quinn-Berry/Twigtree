@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sold Archive — Twig Tree</title>
+  <meta name="description" content="Pieces that found a home. The Twig Tree sold archive.">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="sold">
+
+  <!-- Compact header (no full hero on the archive page) -->
+  <header class="subhead">
+    <nav class="hero__nav subhead__nav">
+      <a class="hero__nav-brand" href="index.html">Twig&nbsp;Tree</a>
+      <div class="hero__nav-links">
+        <a href="index.html">Back to the rack</a>
+      </div>
+    </nav>
+    <div class="subhead__body">
+      <h1 class="subhead__title">Sold archive</h1>
+      <p class="subhead__sub">Gone but not forgotten. Everything below found a home.</p>
+    </div>
+  </header>
+
+  <!-- Same 3-column grid, sold items only. No cart, no detail expansion —
+       tiles are just a record of what passed through. -->
+  <main class="shop">
+    <section class="grid grid--sold" id="grid" aria-live="polite">
+      <!-- tiles injected by js/main.js -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Twig Tree · curated vintage · <a href="mailto:eli@twigtree.shop">eli@twigtree.shop</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

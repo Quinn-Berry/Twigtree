@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twig Tree — Vintage Streetwear</title>
+  <meta name="description" content="Twig Tree. A small, curated shop for vintage streetwear and band tees. Few pieces, all real.">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="shop">
+
+  <!-- ============================================================
+       HERO — full viewport. logo.png + hero.jpg are placeholders,
+       swap the real files in /assets/ (same names) when ready.
+       ============================================================ -->
+  <header class="hero">
+    <img class="hero__bg" src="assets/hero.jpg" alt="" aria-hidden="true">
+    <nav class="hero__nav">
+      <span class="hero__nav-brand">Twig&nbsp;Tree</span>
+      <div class="hero__nav-links">
+        <a href="sold.html">Sold archive</a>
+        <button class="cart-toggle" id="cart-toggle" aria-label="Open cart">
+          Cart <span class="cart-toggle__count" id="cart-count" hidden>0</span>
+        </button>
+      </div>
+    </nav>
+    <div class="hero__center">
+      <img class="hero__logo" src="assets/logo.png" alt="Twig Tree logo">
+      <h1 class="hero__title">Twig Tree</h1>
+      <p class="hero__tagline">Vintage streetwear, one piece at a time.</p>
+    </div>
+    <!-- Subtle scroll cue: the listings live below the fold -->
+    <a class="hero__scroll-cue" href="#shop" aria-label="Scroll to listings">
+      <span>The rack</span>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M12 4v14m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- ============================================================
+       LISTINGS — 3-column grid, rendered from items.json by main.js.
+       Clicking a tile expands it in place into a full-width detail
+       row (see js/main.js for the reflow logic).
+       ============================================================ -->
+  <main class="shop" id="shop">
+    <p class="shop__intro">Eight-ish pieces at a time. When it’s gone, it’s in the <a href="sold.html">archive</a>.</p>
+    <section class="grid" id="grid" aria-live="polite">
+      <!-- tiles injected by js/main.js -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Twig Tree · curated vintage · <a href="mailto:eli@twigtree.shop">eli@twigtree.shop</a></p>
+  </footer>
+
+  <!-- ============================================================
+       CART — slide-out panel, populated by js/cart.js
+       ============================================================ -->
+  <aside class="cart" id="cart" aria-label="Shopping cart" hidden>
+    <div class="cart__head">
+      <h2>Your picks</h2>
+      <button class="icon-btn" id="cart-close" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="cart__list" id="cart-list"></ul>
+    <p class="cart__empty" id="cart-empty">Nothing yet. Everything here is one-of-one — if you love it, grab it.</p>
+    <div class="cart__foot">
+      <p class="cart__total">Total <strong id="cart-total">$0</strong></p>
+      <button class="btn btn--primary" id="cart-checkout">Checkout / Reserve</button>
+      <p class="cart__note">Reserving emails Eli directly — payment happens over email for now.</p>
+    </div>
+  </aside>
+  <div class="cart-scrim" id="cart-scrim" hidden></div>
+
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

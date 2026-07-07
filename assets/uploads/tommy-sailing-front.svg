@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <!-- Placeholder product photo. Swap by uploading real photos via /admin. -->
+  <rect width="800" height="1000" fill="#c9d2d8"/>
+  <rect x="24" y="24" width="752" height="952" fill="none" stroke="#1c2833" stroke-opacity="0.25" stroke-width="2"/>
+  <text x="400" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="34" fill="#1c2833" fill-opacity="0.85">Tommy · Sailing ’93</text>
+  <text x="400" y="530" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="19" letter-spacing="4" fill="#1c2833" fill-opacity="0.55">front · placeholder</text>
+</svg>
