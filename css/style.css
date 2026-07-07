@@ -24,12 +24,28 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  position: relative;   /* anchors the .side-design artwork */
+  overflow-x: clip;     /* its right edge sits 1px past the viewport */
   background: var(--paper);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Side branch artwork (index page): right edge flush with (1px past)
+       the viewport edge, starting a third of the way into the hero, running
+       down behind the listings. Behind everything, clicks pass through. ---- */
+.side-design {
+  position: absolute;
+  top: 33vh;
+  top: 33svh;
+  right: -1px;
+  width: min(27vw, 400px);
+  z-index: -1;              /* behind hero + tiles, above the paper */
+  pointer-events: none;
+  mix-blend-mode: multiply; /* ink on paper even if the PNG loses its alpha */
 }
 
 a { color: inherit; }
@@ -317,6 +333,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* The tile currently expanded lives on inside the detail row; its grid slot
    is removed so former row-mates flow down into the next row. */
 .tile--expanded { display: none; }
+
+/* Invisible cell in row 1, column 3 of the shop grid (inserted by main.js):
+   keeps the first row at two items so the side artwork has breathing room.
+   While a detail row is open the grid reverts to full three-across flow. */
+.grid:has(.detail) .grid__spacer { display: none; }
 
 /* Sold page variant */
 .grid--sold .tile { cursor: default; }
@@ -747,6 +768,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* no room for the side artwork or the row-1 gap on narrow layouts */
+  .side-design { display: none; }
+  .grid__spacer { display: none; }
 
   /* sourcing: copy stacks above the form */
   .sourcing__inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 24px 64px; }

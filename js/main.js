@@ -56,6 +56,17 @@
       return;
     }
     items.forEach((item) => grid.appendChild(buildTile(item)));
+
+    // Shop page: an invisible cell in row 1, column 3 keeps the first row
+    // at two items — clearance for the side branch artwork falling along
+    // the right edge. Hidden on narrow layouts and while a detail row is
+    // open (see .grid__spacer rules in style.css).
+    if (page === 'shop' && items.length > 2) {
+      const spacer = document.createElement('div');
+      spacer.className = 'grid__spacer';
+      spacer.setAttribute('aria-hidden', 'true');
+      grid.insertBefore(spacer, grid.children[2]);
+    }
   }
 
   /** One grid tile: cover image + name + price (or Sold flag). */
@@ -121,11 +132,13 @@
     detailEl.style.height = '0px';
 
     animateReflow(() => {
-      // Find where the clicked tile's ROW starts, in visible-tile terms.
+      // Find where the clicked tile's ROW starts — by geometry, not index
+      // math: the shop grid's first row holds only two tiles (see the
+      // .grid__spacer above), so a row can't be inferred from idx / cols.
+      // The row start is simply the first tile sharing this tile's top.
       const tiles = visibleTiles();
-      const cols = columnCount();
-      const idx = tiles.indexOf(tileEl);
-      const rowStartTile = tiles[Math.floor(idx / cols) * cols];
+      const rowTop = tileEl.offsetTop;
+      const rowStartTile = tiles.find((t) => Math.abs(t.offsetTop - rowTop) < 2);
 
       grid.insertBefore(detailEl, rowStartTile);
       tileEl.classList.add('tile--expanded'); // display:none — frees its slot
@@ -250,11 +263,6 @@
     return Array.from(grid.querySelectorAll('.tile')).filter(
       (t) => !t.classList.contains('tile--expanded')
     );
-  }
-
-  /** How many columns the grid currently has (3 desktop / 2 tablet / 1 phone). */
-  function columnCount() {
-    return getComputedStyle(grid).gridTemplateColumns.split(' ').length;
   }
 
   /**
