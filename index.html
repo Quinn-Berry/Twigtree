@@ -11,11 +11,11 @@
 <body data-page="shop">
 
   <!-- ============================================================
-       HERO — full viewport. logo.png + hero.jpg are placeholders,
-       swap the real files in /assets/ (same names) when ready.
+       HERO — animated intro (see js/hero.js):
+       oversized logo flashes centered → settles into its big resting
+       spot → a typewriter cycles words beneath it.
        ============================================================ -->
-  <header class="hero">
-    <img class="hero__bg" src="assets/hero.jpg" alt="" aria-hidden="true">
+  <header class="hero" id="hero">
     <nav class="hero__nav">
       <span class="hero__nav-brand">Twig&nbsp;Tree</span>
       <div class="hero__nav-links">
@@ -25,11 +25,16 @@
         </button>
       </div>
     </nav>
-    <div class="hero__center">
-      <img class="hero__logo" src="assets/logo.png" alt="Twig Tree logo">
-      <h1 class="hero__title">Twig Tree</h1>
-      <p class="hero__tagline">Vintage streetwear, one piece at a time.</p>
+
+    <img class="hero__logo" id="hero-logo" src="assets/logo.png" alt="Twig Tree">
+
+    <h1 class="sr-only">Twig Tree — vintage streetwear, one piece at a time</h1>
+
+    <!-- Typewriter masthead (decorative — the h1 above carries the meaning) -->
+    <div class="hero__type" aria-hidden="true">
+      <span class="hero__word" id="hero-word"></span><span class="hero__cursor" id="hero-cursor"></span>
     </div>
+
     <!-- Subtle scroll cue: the listings live below the fold -->
     <a class="hero__scroll-cue" href="#shop" aria-label="Scroll to listings">
       <span>The rack</span>
@@ -77,6 +82,7 @@
   </aside>
   <div class="cart-scrim" id="cart-scrim" hidden></div>
 
+  <script src="js/hero.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
 </body>

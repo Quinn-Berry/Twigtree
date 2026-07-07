@@ -36,27 +36,35 @@ img { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ==========================================================================
-   HERO
+   HERO — animated intro (logic in js/hero.js)
+   Warm paper, ink mark. The logo flashes centered and oversized, settles
+   into its big resting spot, then a typewriter cycles words beneath it.
    ========================================================================== */
 
 .hero {
+  /* Layout knobs: */
+  --logo-top: 92px;                  /* resting position below the nav */
+  --logo-h: min(56vh, 600px);        /* resting logo height — most of the hero */
+  --logo-h-intro: min(66vh, 700px);  /* oversized intro logo height */
+  --type-gap: 42px;                  /* air between logo base and the typed word */
+
   position: relative;
   height: 100vh;
   height: 100svh;
-  display: flex;
-  flex-direction: column;
-  color: #f4f1ea;
+  color: var(--ink);
   overflow: hidden;
 }
 
-.hero__bg {
-  /* PLACEHOLDER — swap /assets/hero.jpg for the real header image */
+/* accessible page title (visual heading duty is done by the logo) */
+.sr-only {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .hero__nav {
@@ -102,7 +110,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   align-items: center;
   gap: 8px;
 }
-.cart-toggle:hover { background: rgba(255, 255, 255, 0.12); }
+.cart-toggle:hover { background: rgba(28, 26, 23, 0.07); }
 
 .cart-toggle__count {
   background: var(--paper);
@@ -118,48 +126,85 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .cart-toggle__count[hidden] { display: none; }
 
-.hero__center {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 24px;
-}
+/* ---- Logo: two states, INTRO (oversized, dead-center) and SETTLED
+        (big, top-center). js/hero.js flips the classes; the move
+        between them is a plain CSS transition. ---- */
 
 .hero__logo {
-  /* PLACEHOLDER — swap /assets/logo.png for the real logo */
-  width: 110px;
-  height: 110px;
-  margin-bottom: 10px;
-  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  /* default = settled, so the layout is sane even without JS */
+  top: var(--logo-top);
+  height: var(--logo-h);
+  width: auto;
+  transform: translateX(-50%);
+  transition:
+    top    0.9s var(--ease),
+    height 0.9s var(--ease),
+    transform 0.9s var(--ease);
 }
 
-.hero__title {
+.hero__logo.is-intro {
+  top: 46%;
+  height: var(--logo-h-intro);
+  transform: translate(-50%, -50%);
+  opacity: 0; /* until the flash plays */
+}
+
+/* The flash: a quick opacity/glow pulse with a slight scale overshoot.
+   Runs once at the intro position, then hero.js swaps to .is-settled. */
+.hero__logo.is-flashing {
+  animation: logo-flash 0.5s ease-out forwards;
+}
+
+@keyframes logo-flash {
+  0%   { opacity: 0;    transform: translate(-50%, -50%) scale(0.92); filter: drop-shadow(0 0 0 rgba(74, 81, 56, 0)); }
+  30%  { opacity: 1;    transform: translate(-50%, -50%) scale(1.06); filter: drop-shadow(0 0 26px rgba(74, 81, 56, 0.75)); }
+  55%  { opacity: 0.55; transform: translate(-50%, -50%) scale(1.02); filter: drop-shadow(0 0 8px rgba(74, 81, 56, 0.3)); }
+  100% { opacity: 1;    transform: translate(-50%, -50%) scale(1);    filter: drop-shadow(0 0 0 rgba(74, 81, 56, 0)); }
+}
+
+/* ---- Typewriter masthead ---- */
+
+.hero__type {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap));
+  text-align: center;
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(52px, 9vw, 108px);
-  letter-spacing: 0.02em;
-  margin: 0;
+  font-size: clamp(34px, 6vw, 58px);
   line-height: 1;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  white-space: pre; /* typed spaces must keep their width */
 }
 
-.hero__tagline {
-  font-size: 14px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0.85;
-  margin-top: 18px;
+.hero__cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.05em;
+  margin-left: 5px;
+  background: var(--ink);
+  vertical-align: -0.12em;
+  visibility: hidden; /* hero.js reveals it when typing starts */
+}
+.hero__cursor.is-on { visibility: visible; }
+.hero__cursor.is-blinking { animation: cursor-blink 1.05s steps(1) infinite; }
+
+@keyframes cursor-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0; }
 }
 
 .hero__scroll-cue {
-  position: relative;
+  position: absolute;
   z-index: 1;
-  align-self: center;
-  margin-bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -588,11 +633,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
   .hero__nav { padding: 18px 18px; }
   .shop { padding-top: 40px; }
+
+  /* slightly smaller logo so the word stays comfortably on screen */
+  .hero {
+    --logo-top: 80px;
+    --logo-h: min(50vh, 440px);
+    --logo-h-intro: min(58vh, 500px);
+    --type-gap: 32px;
+  }
 }
 
-/* Respect reduced-motion users: skip the expand/collapse animation */
+/* Respect reduced-motion users: skip the expand/collapse animation,
+   the logo intro, and the cursor blink (hero.js also skips its sequence) */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .detail, .tile__img, .cart, .cart-scrim { transition: none !important; animation: none !important; }
+  .detail, .tile__img, .cart, .cart-scrim,
+  .hero__logo, .hero__cursor { transition: none !important; animation: none !important; }
   .hero__scroll-cue svg { animation: none; }
 }
