@@ -156,7 +156,7 @@
       encodeURIComponent(lines.join('\n')).replace(/%0A/g, '%0D%0A') +
       `%0D%0A%0D%0ATotal: ${encodeURIComponent(money(total))}%0D%0A%0D%0AThanks!`;
     window.location.href =
-      'mailto:eli@twigtree.shop?subject=' +
+      'mailto:elibillings17@gmail.com?subject=' +
       encodeURIComponent('twigtree reservation') +
       '&body=' + body;
   });

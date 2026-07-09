@@ -59,11 +59,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
    ========================================================================== */
 
 .hero {
-  /* Layout knobs: */
-  --logo-top: 92px;                  /* resting position below the nav */
-  --logo-h: min(56vh, 600px);        /* resting logo height — most of the hero */
+  /* Layout knobs. The DEFAULT is the DOCKED state — logo + typewriter
+     tucked into the top-left third with the mission beside them — so the
+     page is sane without JS. hero.js plays the intro center-stage by
+     adding .is-staging, then swaps it for .is-docked to snap back here. */
+  --logo-top: 120px;                 /* docked position — clear of the nav brand */
+  --logo-h: min(42vh, 440px);        /* docked logo height — sizable corner */
   --logo-h-intro: min(66vh, 700px);  /* oversized intro logo height */
-  --type-gap: 42px;                  /* air between logo base and the typed word */
+  --type-gap: 34px;                  /* air between logo base and the typed word */
+  --type-size: clamp(26px, 4vw, 40px); /* typed word, scaled to the docked group */
+  --group-x: 20%;                    /* horizontal center of the logo + typewriter
+                                        package — the mission sits to its right */
 
   position: relative;
   height: 100vh;
@@ -71,6 +77,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--ink);
   overflow: hidden;
 }
+
+/* Staging: the intro plays center-stage and big; mission waits offstage */
+.hero.is-staging {
+  --logo-top: 92px;
+  --logo-h: min(56vh, 600px);
+  --type-gap: 42px;
+  --type-size: clamp(34px, 6vw, 58px);
+  --group-x: 50%;
+}
+
+/* The dock snap is brisk — noticeably quicker than the intro settle */
+.hero.is-docked .hero__logo,
+.hero.is-docked .hero__type { transition-duration: 0.45s; }
 
 /* accessible page title (visual heading duty is done by the logo) */
 .sr-only {
@@ -95,7 +114,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .hero__nav-brand {
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: 38px;
   letter-spacing: 0.04em;
   text-decoration: none;
 }
@@ -150,7 +169,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero__logo {
   position: absolute;
   z-index: 1;
-  left: 50%;
+  left: var(--group-x);
   /* default = settled, so the layout is sane even without JS */
   top: var(--logo-top);
   height: var(--logo-h);
@@ -158,11 +177,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
   transform: translateX(-50%);
   transition:
     top    0.9s var(--ease),
+    left   0.9s var(--ease),
     height 0.9s var(--ease),
     transform 0.9s var(--ease);
 }
 
 .hero__logo.is-intro {
+  left: 50%; /* the flash plays dead-center, then glides to the group spot */
   top: 46%;
   height: var(--logo-h-intro);
   transform: translate(-50%, -50%);
@@ -187,15 +208,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero__type {
   position: absolute;
   z-index: 1;
-  left: 0;
-  right: 0;
+  /* shrink-wrapped box whose center tracks the logo's center, so the
+     word stays centered under the logo wherever the group sits */
+  left: var(--group-x);
+  transform: translateX(-50%);
   top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap));
   text-align: center;
+  white-space: nowrap;
   font-family: var(--serif);
-  font-size: clamp(34px, 6vw, 58px);
+  font-size: var(--type-size);
   line-height: 1;
   letter-spacing: 0.09em;
   color: var(--ink);
+  /* rides along on the dock snap, tracking the logo */
+  transition:
+    top       0.9s var(--ease),
+    left      0.9s var(--ease),
+    font-size 0.9s var(--ease),
+    transform 0.9s var(--ease);
 }
 
 /* pre lives on the word span only: a mid-type trailing space ("one ") must
@@ -217,6 +247,46 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes cursor-blink {
   0%, 60% { opacity: 1; }
   61%, 100% { opacity: 0; }
+}
+
+/* ---- Mission statement: low and toward the hero's center — starting
+        just below the typed-word line, clear of the group's widest words
+        and of the right-edge branch artwork's breathing room. ---- */
+
+.hero__mission {
+  position: absolute;
+  z-index: 1;
+  left: 36%;
+  width: min(30vw, 400px);
+  /* just below the typed word at the base of the group */
+  top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap) + 64px);
+}
+
+.hero__mission p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+
+/* Offstage while the intro plays center-stage… */
+.hero.is-staging .hero__mission {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* …then pops in just as the group lands in its corner. `backwards` keeps
+   it invisible through the delay; animating the <p> (not the container)
+   keeps the container's translateY(-50%) centering untouched. */
+.hero.is-docked .hero__mission p {
+  animation: mission-pop 0.55s var(--ease) 0.3s backwards;
+}
+
+@keyframes mission-pop {
+  0%   { opacity: 0; transform: scale(0.94) translateY(12px); }
+  70%  { opacity: 1; transform: scale(1.015) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .hero__scroll-cue {
@@ -754,8 +824,32 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .footer {
   border-top: 1px solid var(--line);
-  padding: 30px 24px;
+  padding: 44px 24px 40px;
   text-align: center;
+}
+
+.footer__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin: 0 0 12px;
+}
+
+.footer__links {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 34px;
+  font-family: var(--serif);
+  font-size: 18px;
+}
+.footer__links a { text-decoration: none; }
+.footer__links a:hover { text-decoration: underline; }
+
+.footer__fine {
+  margin: 18px 0 0;
   color: var(--ink-soft);
   font-size: 13px;
 }
@@ -772,6 +866,33 @@ button { font: inherit; color: inherit; cursor: pointer; }
   /* no room for the side artwork or the row-1 gap on narrow layouts */
   .side-design { display: none; }
   .grid__spacer { display: none; }
+
+  /* no side-by-side room: group stays centered in BOTH states — the dock
+     snap just shrinks it upward and the mission pops in below the word */
+  .hero {
+    --group-x: 50%;
+    --logo-top: 96px;
+    --logo-h: min(36vh, 340px);
+    --logo-h-intro: min(52vh, 480px);
+    --type-gap: 28px;
+    --type-size: clamp(26px, 4.5vw, 38px);
+  }
+  .hero.is-staging {
+    --group-x: 50%;
+    --logo-top: 92px;
+    --logo-h: min(44vh, 420px);
+    --type-gap: 36px;
+    --type-size: clamp(30px, 5.5vw, 48px);
+  }
+  .hero__mission {
+    left: 32px;
+    right: 32px;
+    width: auto;
+    transform: none;
+    top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap) + 76px);
+    text-align: center;
+  }
+  .hero__mission p { font-size: 15px; line-height: 1.75; }
 
   /* sourcing: copy stacks above the form */
   .sourcing__inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 24px 64px; }
@@ -793,7 +914,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
   /* three nav links + cart have to share a phone width */
   .hero__nav { padding: 18px 16px; gap: 10px; }
-  .hero__nav-brand { font-size: 18px; }
+  .hero__nav-brand { font-size: 27px; }
   .hero__nav-links { gap: 12px; }
   .hero__nav-links a {
     font-size: 10.5px;
@@ -808,20 +929,33 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .sourcing__row { grid-template-columns: 1fr; }
   .sourcing__submit { align-self: stretch; }
 
-  /* slightly smaller logo so the word stays comfortably on screen */
+  /* smaller logo so the word AND the mission fit comfortably on screen */
   .hero {
-    --logo-top: 80px;
-    --logo-h: min(50vh, 440px);
-    --logo-h-intro: min(58vh, 500px);
-    --type-gap: 32px;
+    --logo-top: 86px;
+    --logo-h: min(30vh, 260px);
+    --logo-h-intro: min(46vh, 380px);
+    --type-gap: 22px;
+    --type-size: clamp(24px, 6vw, 32px);
   }
+  .hero.is-staging {
+    --logo-top: 80px;
+    --logo-h: min(38vh, 330px);
+    --type-gap: 28px;
+    --type-size: clamp(28px, 7vw, 40px);
+  }
+  .hero__mission {
+    left: 22px;
+    right: 22px;
+    top: calc(var(--logo-top) + var(--logo-h) + var(--type-gap) + 56px);
+  }
+  .hero__mission p { font-size: 13.5px; }
 }
 
 /* Respect reduced-motion users: skip the expand/collapse animation,
    the logo intro, and the cursor blink (hero.js also skips its sequence) */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .detail, .tile__img, .cart, .cart-scrim,
-  .hero__logo, .hero__cursor { transition: none !important; animation: none !important; }
+  .detail, .tile__img, .cart, .cart-scrim, .hero__logo, .hero__type,
+  .hero__cursor, .hero__mission p { transition: none !important; animation: none !important; }
   .hero__scroll-cue svg { animation: none; }
 }

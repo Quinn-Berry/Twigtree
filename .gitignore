@@ -2,3 +2,9 @@
 .remember/
 .claude/settings.local.json
 .DS_Store
+
+# local pre-update snapshots kept for easy manual revert
+backup-*/
+
+# design source files (Illustrator)
+*.ai
